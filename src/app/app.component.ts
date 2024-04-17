@@ -1,13 +1,30 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'todo-app';
+  title= '';
+  responsedata = {
+    message: '',
+  };
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    console.log('Hello from AppComponent');
+    this.http.get<{ message: string }>('http://localhost:8000/api/test').subscribe(
+      (response) => {
+        this.responsedata.message = response.message;
+        console.log('Response:', this.responsedata);
+        this.title = this.responsedata.message;
+      },
+      (err) => {
+        console.log('Error:', err);
+      }
+    );
+  }
 }
