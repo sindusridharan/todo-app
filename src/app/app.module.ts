@@ -1,20 +1,24 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { AppComponent } from './app.component'; // Assuming you have an AppComponent
+import { AppComponent } from './app.component';
 import { RouterOutlet } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
-    AppComponent, // Add other components here if needed
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    HttpClientModule, // Add other imported modules here
-    RouterOutlet,
+    HttpClientModule,
+    RouterOutlet, 
+    ServiceWorkerModule.register('ngsw-worker.js', {
+  enabled: !isDevMode(),
+  registrationStrategy: 'registerWhenStable:30000'
+}),
   ],
   providers: [],
   bootstrap: [AppComponent],
-  // Do not include AppComponent in the bootstrap array here
 })
 export class AppModule {}

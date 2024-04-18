@@ -15,14 +15,12 @@ export class AppComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    console.log('Hello from AppComponent');
     this.http.get<{ message: string }>('http://localhost:8000/api/test').subscribe(
-      (response) => {
+      (response: any) => {
         this.responsedata.message = response.message;
-        console.log('Response:', this.responsedata);
         this.title = this.responsedata.message;
       },
-      (err) => {
+      (err: any) => {
         console.log('Error:', err);
       }
     );
